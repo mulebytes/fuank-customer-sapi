@@ -1,0 +1,413 @@
+{
+	"info": {
+		"_postman_id": "81c4231d-c03e-48ca-ad55-19191b125e5f",
+		"name": "faunk-customer-api",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "22704157"
+	},
+	"item": [
+		{
+			"name": "/api/createCustomer",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "admin",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "admin",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"firstName\": \"Jagadish\",\r\n    \"lastName\": \"Nielsen\",\r\n    \"companyName\": \"E-ffoc\",\r\n    \"email\": \"ulrichN@effoc.com\",\r\n    \"phone\": \"+494341927420\",\r\n    \"address\": [\r\n        {\r\n            \"street\": \"Steinbrueckstrasse\",\r\n            \"houseNumber\": 114,\r\n            \"city\": \"Nuremberg\",\r\n            \"country\": \"Germany\",\r\n            \"postalCode\": \"90408\"\r\n        }\r\n    ]\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://faunk-customer-sapi.us-e2.cloudhub.io//api/createCustomer",
+					"protocol": "http",
+					"host": [
+						"faunk-customer-sapi",
+						"us-e2",
+						"cloudhub",
+						"io"
+					],
+					"path": [
+						"",
+						"api",
+						"createCustomer"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "201-/api/createCustomer",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"firstName\": \"Jagadish\",\r\n    \"lastName\": \"Nielsen\",\r\n    \"companyName\": \"E-ffoc\",\r\n    \"email\": \"ulrichN@effoc.com\",\r\n    \"phone\": \"+494341927420\",\r\n    \"address\": [\r\n        {\r\n            \"street\": \"Steinbrueckstrasse\",\r\n            \"houseNumber\": 114,\r\n            \"city\": \"Nuremberg\",\r\n            \"country\": \"Germany\",\r\n            \"postalCode\": \"90408\"\r\n        }\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8081/api/createCustomer",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"api",
+								"createCustomer"
+							]
+						}
+					},
+					"status": "Created",
+					"code": 201,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=UTF-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "960"
+						},
+						{
+							"key": "Date",
+							"value": "Wed, 02 Nov 2022 17:17:07 GMT"
+						}
+					],
+					"cookie": [],
+					"body": "[\n    {\n        \"status\": \"Customer profile Created successfully\",\n        \"salesforceResponse\": [\n            {\n                \"success\": true,\n                \"id\": \"0o65h000000sY45AAE\",\n                \"errors\": []\n            }\n        ]\n    },\n    {\n        \"id\": \"6d9c5a77-512a-4f34-8223-4b50ce748811\",\n        \"customerId\": \"6d9c5a77-512a-4f34-8223-4b50ce748811\",\n        \"personalInformation\": {\n            \"firstName\": \"Jagadish\",\n            \"lastName\": \"Nielsen\",\n            \"companyName\": \"E-ffoc\",\n            \"email\": \"ulrichN@effoc.com\",\n            \"phone\": \"+494341927420\"\n        },\n        \"address\": [\n            {\n                \"street\": \"Steinbrueckstrasse\",\n                \"houseNumber\": 114,\n                \"city\": \"Nuremberg\",\n                \"country\": \"Germany\",\n                \"postalCode\": \"90408\"\n            }\n        ],\n        \"_rid\": \"vEoyAINGy14CAAAAAAAAAA==\",\n        \"_self\": \"dbs/vEoyAA==/colls/vEoyAINGy14=/docs/vEoyAINGy14CAAAAAAAAAA==/\",\n        \"_etag\": \"\\\"0000f003-0000-0700-0000-6362a6130000\\\"\",\n        \"_attachments\": \"attachments/\",\n        \"_ts\": 1667409427\n    }\n]"
+				},
+				{
+					"name": "400-/api/createCustomer",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"firstName\": \"Jagadish\",\r\n    \"lastName\": \"Nielsen\",\r\n    \"companyName\": \"E-ffoc\",\r\n    \"email\": \"ulrichN@effoc.com\",\r\n    \"phone\": \"+494341927420\",\r\n    \"address\": [\r\n        {\r\n            \"street\": \"Steinbrueckstrasse\",\r\n            \"houseNumber\": 114,\r\n            \"city\": \"Nuremberg\",\r\n            \"country\": \"Germany\",\r\n            \"postalCode\": \"90408\"\r\n        }\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8081/api/createCustomer",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"api",
+								"createCustomer"
+							]
+						}
+					},
+					"status": "Bad Request",
+					"code": 400,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=UTF-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "381"
+						},
+						{
+							"key": "Date",
+							"value": "Wed, 02 Nov 2022 17:42:25 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "close"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"appName\": \"fuank-customer-sapi\",\n    \"failingComponent\": \"fuank-customer-sapi-main/processors/0 @ fuank-customer-sapi:fuank-customer-sapi.xml:14\",\n    \"transactionId\": \"b66c7b10-5ad5-11ed-9296-5a03a401491c\",\n    \"requestTimeStamp\": \"2022-11-02T23_12_25.658\",\n    \"errorType\": \"APIKIT:BAD_REQUEST\",\n    \"errorDescription\": \"required key [firstName] not found\",\n    \"errorRootCause\": null\n}"
+				}
+			]
+		},
+		{
+			"name": "/api/getCustomer/6d9c5a77-512a-4f34-8223-4b50ce748811",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "admin",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "admin",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://faunk-customer-sapi.us-e2.cloudhub.io/api/getCustomer/b78403fa-5e5f-43d8-8b51-2d0509b2a9bd",
+					"protocol": "http",
+					"host": [
+						"faunk-customer-sapi",
+						"us-e2",
+						"cloudhub",
+						"io"
+					],
+					"path": [
+						"api",
+						"getCustomer",
+						"b78403fa-5e5f-43d8-8b51-2d0509b2a9bd"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "200-/api/getCustomer/6d9c5a77-512a-4f34-8223-4b50ce748811",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"firstName\": \"Ulrich\",\r\n    \"lastName\": \"Nielsen\",\r\n    \"companyName\": \"E-ffoc\",\r\n    \"email\": \"ulrichN@effoc.com\",\r\n    \"phone\": \"+494341927420\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8081/api/getCustomer/6d9c5a77-512a-4f34-8223-4b50ce748811",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"api",
+								"getCustomer",
+								"6d9c5a77-512a-4f34-8223-4b50ce748811"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=UTF-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "291"
+						},
+						{
+							"key": "Date",
+							"value": "Wed, 02 Nov 2022 17:17:27 GMT"
+						}
+					],
+					"cookie": [],
+					"body": "[\n    {\n        \"companyName__c\": \"E-ffoc\",\n        \"lastName__c\": \"Nielsen\",\n        \"firstName__c\": \"Jagadish\",\n        \"phone__c\": \"+494341927420\",\n        \"customerId__c\": \"6d9c5a77-512a-4f34-8223-4b50ce748811\",\n        \"email__c\": \"ulrichn@effoc.com\",\n        \"Id\": \"0o65h000000sY45AAE\",\n        \"type\": \"Customer\"\n    }\n]"
+				}
+			]
+		},
+		{
+			"name": "/api/updateCustomer",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "admin",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "admin",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"customerId\": \"b78403fa-5e5f-43d8-8b51-2d0509b2a9bd\",\r\n    \"firstName\": \"Jagadishwar\",\r\n    \"lastName\": \"Reddy\",\r\n    \"companyName\": \"EPAM\",\r\n    \"email\": \"jreddycr@gmail.com\",\r\n    \"phone\": \"+494341927420\",\r\n    \"address\": [\r\n        {\r\n            \"street\": \"Steinbrueckstrasse\",\r\n            \"houseNumber\": 114,\r\n            \"city\": \"Nuremberg\",\r\n            \"country\": \"Germany\",\r\n            \"postalCode\": \"90408\"\r\n        }\r\n    ]\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://faunk-customer-sapi.us-e2.cloudhub.io/api/updateCustomer",
+					"protocol": "http",
+					"host": [
+						"faunk-customer-sapi",
+						"us-e2",
+						"cloudhub",
+						"io"
+					],
+					"path": [
+						"api",
+						"updateCustomer"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "200-/api/updateCustomer",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"customerId\": \"6d9c5a77-512a-4f34-8223-4b50ce748811\",\r\n    \"firstName\": \"Jagadishwar\",\r\n    \"lastName\": \"Reddy\",\r\n    \"companyName\": \"EPAM\",\r\n    \"email\": \"jreddycr@gmail.com\",\r\n    \"phone\": \"+494341927420\",\r\n    \"address\": [\r\n        {\r\n            \"street\": \"Steinbrueckstrasse\",\r\n            \"houseNumber\": 114,\r\n            \"city\": \"Nuremberg\",\r\n            \"country\": \"Germany\",\r\n            \"postalCode\": \"90408\"\r\n        }\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8081/api/updateCustomer",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"api",
+								"updateCustomer"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=UTF-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "960"
+						},
+						{
+							"key": "Date",
+							"value": "Wed, 02 Nov 2022 17:18:09 GMT"
+						}
+					],
+					"cookie": [],
+					"body": "[\n    {\n        \"status\": \"Customer profile Updated successfully\",\n        \"salesforceResponse\": [\n            {\n                \"success\": true,\n                \"id\": \"0o65h000000sY45AAE\",\n                \"errors\": []\n            }\n        ]\n    },\n    {\n        \"id\": \"6d9c5a77-512a-4f34-8223-4b50ce748811\",\n        \"customerId\": \"6d9c5a77-512a-4f34-8223-4b50ce748811\",\n        \"personalInformation\": {\n            \"firstName\": \"Jagadishwar\",\n            \"lastName\": \"Reddy\",\n            \"companyName\": \"EPAM\",\n            \"email\": \"jreddycr@gmail.com\",\n            \"phone\": \"+494341927420\"\n        },\n        \"address\": [\n            {\n                \"street\": \"Steinbrueckstrasse\",\n                \"houseNumber\": 114,\n                \"city\": \"Nuremberg\",\n                \"country\": \"Germany\",\n                \"postalCode\": \"90408\"\n            }\n        ],\n        \"_rid\": \"vEoyAINGy14CAAAAAAAAAA==\",\n        \"_self\": \"dbs/vEoyAA==/colls/vEoyAINGy14=/docs/vEoyAINGy14CAAAAAAAAAA==/\",\n        \"_etag\": \"\\\"0000f203-0000-0700-0000-6362a6500000\\\"\",\n        \"_attachments\": \"attachments/\",\n        \"_ts\": 1667409488\n    }\n]"
+				}
+			]
+		},
+		{
+			"name": "/api/listCustomersCosmos",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "admin",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "admin",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://faunk-customer-sapi.us-e2.cloudhub.io/api/listCustomersCosmos",
+					"protocol": "http",
+					"host": [
+						"faunk-customer-sapi",
+						"us-e2",
+						"cloudhub",
+						"io"
+					],
+					"path": [
+						"api",
+						"listCustomersCosmos"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "200-/api/listCustomersCosmos",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8081/api/listCustomersCosmos",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"api",
+								"listCustomersCosmos"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=UTF-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "1486"
+						},
+						{
+							"key": "Date",
+							"value": "Wed, 02 Nov 2022 17:18:44 GMT"
+						}
+					],
+					"cookie": [],
+					"body": "[\n    {\n        \"id\": \"18884d20-41de-46a3-b76b-61787028eeed\",\n        \"customerId\": \"18884d20-41de-46a3-b76b-61787028eeed\",\n        \"personalInformation\": {\n            \"firstName\": \"Jagadishwar\",\n            \"lastName\": \"Reddy\",\n            \"companyName\": \"EPAM\",\n            \"email\": \"jreddycr@gmail.com\",\n            \"phone\": \"+494341927420\"\n        },\n        \"address\": [\n            {\n                \"street\": \"Steinbrueckstrasse\",\n                \"houseNumber\": 114,\n                \"city\": \"Nuremberg\",\n                \"country\": \"Germany\",\n                \"postalCode\": \"90408\"\n            }\n        ],\n        \"_rid\": \"vEoyAINGy14BAAAAAAAAAA==\",\n        \"_self\": \"dbs/vEoyAA==/colls/vEoyAINGy14=/docs/vEoyAINGy14BAAAAAAAAAA==/\",\n        \"_etag\": \"\\\"0000c003-0000-0700-0000-636296440000\\\"\",\n        \"_attachments\": \"attachments/\",\n        \"_ts\": 1667405380\n    },\n    {\n        \"id\": \"6d9c5a77-512a-4f34-8223-4b50ce748811\",\n        \"customerId\": \"6d9c5a77-512a-4f34-8223-4b50ce748811\",\n        \"personalInformation\": {\n            \"firstName\": \"Jagadishwar\",\n            \"lastName\": \"Reddy\",\n            \"companyName\": \"EPAM\",\n            \"email\": \"jreddycr@gmail.com\",\n            \"phone\": \"+494341927420\"\n        },\n        \"address\": [\n            {\n                \"street\": \"Steinbrueckstrasse\",\n                \"houseNumber\": 114,\n                \"city\": \"Nuremberg\",\n                \"country\": \"Germany\",\n                \"postalCode\": \"90408\"\n            }\n        ],\n        \"_rid\": \"vEoyAINGy14CAAAAAAAAAA==\",\n        \"_self\": \"dbs/vEoyAA==/colls/vEoyAINGy14=/docs/vEoyAINGy14CAAAAAAAAAA==/\",\n        \"_etag\": \"\\\"0000f203-0000-0700-0000-6362a6500000\\\"\",\n        \"_attachments\": \"attachments/\",\n        \"_ts\": 1667409488\n    }\n]"
+				}
+			]
+		}
+	]
+}
