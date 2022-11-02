@@ -36,7 +36,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://faunk-customer-sapi.us-e2.cloudhub.io//api/createCustomer",
+					"raw": "http://faunk-customer-sapi.us-e2.cloudhub.io/api/createCustomer",
 					"protocol": "http",
 					"host": [
 						"faunk-customer-sapi",
@@ -45,7 +45,6 @@
 						"io"
 					],
 					"path": [
-						"",
 						"api",
 						"createCustomer"
 					]
