@@ -1,0 +1,26 @@
+#%RAML 1.0 DataType
+displayName: address
+type: array
+items:
+  type: object
+  properties:
+    street:
+      type: string
+      required: false
+      example: "Steinbrueckstrasse"
+    houseNumber:
+      type: number
+      required: false
+      example: 114
+    city:
+      type: string
+      required: false
+      example: "Nuremberg"
+    country:
+      type: string
+      required: false
+      example: "Germany"
+    postalCode:
+      type: string
+      required: false
+      example: "90408"

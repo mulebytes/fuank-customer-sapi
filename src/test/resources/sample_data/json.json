@@ -1,0 +1,27 @@
+{
+  "id": "5a9fb0cb204b43ba802",
+  "customerId": "64cf7e5dd8024d1c935",
+  "personalInformation": {
+    "firstName": "Alessandra",
+    "lastName": "Smoughton",
+    "companyName": "aute",
+    "email": "Chet.Alkin@gmail.com",
+    "phone": "(262)-716-8937"
+  },
+  "address": [
+    {
+      "street": "Loyd St 83",
+      "houseNumber": 17,
+      "city": "San Francisco",
+      "country": "Ghana",
+      "postalCode": "quis"
+    },
+    {
+      "street": "Third St 30",
+      "houseNumber": 46,
+      "city": "Manchester",
+      "country": "Guinea",
+      "postalCode": "eius"
+    }
+  ]
+}

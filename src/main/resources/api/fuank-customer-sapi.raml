@@ -1,0 +1,47 @@
+#%RAML 1.0
+title: fuank-customer-sapi
+version: 1.0.0
+mediaType: 
+- application/json
+description: Customer API is implemented to create, update and retrieve customer info from/to CRM and Cosmo DB
+
+/createCustomer:
+  description: This resource will enable users to create Customer data in CRM, method:POST and body type:JSON, response code:201
+  post:
+    body:
+      application/json:
+        type: !include dataTypes/createCustomerType.raml
+        example: !include examples/request/createCustomerRequest.json          
+    responses:
+      201:
+        body:
+          application/json:
+            example: !include examples/response/createCustomerResponse.json
+    
+/updateCustomer:
+  description: This resource will enable users to update Customer data in CRM, method:POST and body type:JSON, response code:200  
+  post:
+    body:
+      application/json:
+        type: !include dataTypes/updateCustomerType.raml
+        example: !include examples/request/updateCustomerRequest.json          
+    responses:
+      200:
+        body:
+          application/json:
+            example: !include examples/response/updateCustomerResponse.json
+
+/getCustomer:
+  /{customerId}:
+    get:
+      responses:
+        200:
+          body:
+            application/json:
+              example: !include examples/response/getCustomerResponse.json
+/listCustomersCosmos:
+    get:
+      responses:
+        200:
+          body:
+            application/json:

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mule xmlns:azure-cosmos-db-connector-mule-4="http://www.mulesoft.org/schema/mule/azure-cosmos-db-connector-mule-4" xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:apikit="http://www.mulesoft.org/schema/mule/mule-apikit" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd http://www.mulesoft.org/schema/mule/mule-apikit http://www.mulesoft.org/schema/mule/mule-apikit/current/mule-apikit.xsd http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd 
+http://www.mulesoft.org/schema/mule/azure-cosmos-db-connector-mule-4 http://www.mulesoft.org/schema/mule/azure-cosmos-db-connector-mule-4/current/mule-azure-cosmos-db-connector-mule-4.xsd">
+    <flow name="fuank-customer-sapi-main">
+        <http:listener config-ref="fuank-customer-sapi-httpListenerConfig" path="/api/*">
+            <http:response statusCode="#[vars.httpStatus default 200]">
+                <http:headers>#[vars.outboundHeaders default {}]</http:headers>
+            </http:response>
+            <http:error-response statusCode="#[vars.httpStatus default 500]">
+                <http:body>#[payload]</http:body>
+                <http:headers>#[vars.outboundHeaders default {}]</http:headers>
+            </http:error-response>
+        </http:listener>
+        <apikit:router config-ref="fuank-customer-sapi-config" />
+        <error-handler ref="globalErrorHandler" />
+    </flow>
+    <flow name="fuank-customer-sapi-console">
+        <http:listener config-ref="fuank-customer-sapi-httpListenerConfig" path="/console/*">
+            <http:response statusCode="#[vars.httpStatus default 200]">
+                <http:headers>#[vars.outboundHeaders default {}]</http:headers>
+            </http:response>
+            <http:error-response statusCode="#[vars.httpStatus default 500]">
+                <http:body>#[payload]</http:body>
+                <http:headers>#[vars.outboundHeaders default {}]</http:headers>
+            </http:error-response>
+        </http:listener>
+        <apikit:console config-ref="fuank-customer-sapi-config" />
+        <error-handler ref="globalErrorHandler" />
+    </flow>
+    <flow name="get:\getCustomer\(customerId):fuank-customer-sapi-config">
+        <flow-ref doc:name="entryLogger" doc:id="5de9a036-6798-44f8-9ece-0502b75bd7d6" name="entryLogger" />
+        <flow-ref doc:name="getCustomer-implementation-flow" doc:id="4a17434e-5285-4e8f-91dd-76d90b731c79" name="getCustomer-implementation-flow" />
+        <flow-ref doc:name="exitLogger" doc:id="072f6620-90a0-4590-875c-f2242629b467" name="exitLogger" />
+    </flow>
+    <flow name="post:\createCustomer:application\json:fuank-customer-sapi-config">
+        <flow-ref doc:name="entryLogger" doc:id="88969b14-9298-4558-9cc9-0fd1082701c7" name="entryLogger" />
+        <flow-ref doc:name="createCustomer-implementation-flow" doc:id="bba42548-88a3-4688-b9c0-082483db8848" name="createCustomer-implementation-flow" />
+        <flow-ref doc:name="exitLogger" doc:id="e02e7873-dc3c-4000-84af-44428c2a5fd2" name="exitLogger" />
+    </flow>
+    <flow name="post:\updateCustomer:application\json:fuank-customer-sapi-config">
+        <flow-ref doc:name="entryLogger" doc:id="0c80ade9-a71c-4bc8-8df0-545467da9cf9" name="entryLogger" />
+        <flow-ref doc:name="updateCustomer-implementation-flow" doc:id="1d4ca56b-5a33-4a65-aac3-badedb562fc4" name="updateCustomer-implementation-flow" />
+        <flow-ref doc:name="exitLogger" doc:id="ee85da81-098b-41f3-95f0-10fcaccb873d" name="exitLogger" />
+    </flow>
+    <flow name="get:\listCustomersCosmos:fuank-customer-sapi-config">
+        <flow-ref doc:name="entryLogger" doc:id="e770edd0-2736-44ff-b622-1b69a65aa888" name="entryLogger" />
+		<flow-ref doc:name="listCustomers-implementation-flow" doc:id="989460ff-b50f-49b7-8403-7967f8785fab" name="listCustomers-implementation-flow" />
+        <flow-ref doc:name="exitLogger" doc:id="d61b8444-bafa-4a31-880f-b10acfd77340" name="exitLogger" />
+    </flow>
+</mule>

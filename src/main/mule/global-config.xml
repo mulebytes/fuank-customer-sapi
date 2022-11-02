@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:api-gateway="http://www.mulesoft.org/schema/mule/api-gateway"
+	xmlns:azure-cosmos-db-connector-mule-4="http://www.mulesoft.org/schema/mule/azure-cosmos-db-connector-mule-4"
+	xmlns:salesforce="http://www.mulesoft.org/schema/mule/salesforce" xmlns:apikit="http://www.mulesoft.org/schema/mule/mule-apikit"
+	xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="
+http://www.mulesoft.org/schema/mule/mule-apikit http://www.mulesoft.org/schema/mule/mule-apikit/current/mule-apikit.xsd 
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/salesforce http://www.mulesoft.org/schema/mule/salesforce/current/mule-salesforce.xsd
+http://www.mulesoft.org/schema/mule/azure-cosmos-db-connector-mule-4 http://www.mulesoft.org/schema/mule/azure-cosmos-db-connector-mule-4/current/mule-azure-cosmos-db-connector-mule-4.xsd
+http://www.mulesoft.org/schema/mule/api-gateway http://www.mulesoft.org/schema/mule/api-gateway/current/mule-api-gateway.xsd">
+	<global-property doc:name="Global Property" doc:id="0e96724b-fd91-40c0-a5a0-5005d053c08f" name="logDebugEnabled" value="false" />
+<http:listener-config name="fuank-customer-sapi-httpListenerConfig">
+        <http:listener-connection host="0.0.0.0" port="8081" />
+    </http:listener-config>
+    <apikit:config name="fuank-customer-sapi-config" api="fuank-customer-sapi.raml" outboundHeadersMapName="outboundHeaders" httpStatusVarName="httpStatus" />
+	<salesforce:sfdc-config name="Salesforce_Config" doc:name="Salesforce Config" doc:id="1ab29e8e-e4c2-44f0-9bbe-f28993e43afb" >
+		<salesforce:basic-connection username="${salesforce.username}" password="${salesforce.password}" securityToken="${salesforce.secuirty_token}" />
+	</salesforce:sfdc-config>
+	<azure-cosmos-db-connector-mule-4:key-token-config name="Azure_Cosmos_Db_Key_Token_Config" doc:name="Azure Cosmos Db Key Token Config" doc:id="b4a2bc74-5141-4c4b-aeaa-50efbded527c" >
+		<azure-cosmos-db-connector-mule-4:key-token-auth-connection baseUri="${cosmos.database_account_url}" key="${cosmos.token_key}" version="${cosmos.rest_api_version}" />
+	</azure-cosmos-db-connector-mule-4:key-token-config>
+	<configuration-properties doc:name="Configuration properties" doc:id="0f6e6871-15d3-4726-ba28-d9f047236353" file="properties/${env}-config.yaml" />
+	<global-property doc:name="Global Property" doc:id="d0db0104-ccb7-49ae-8218-eb83ef669d02" name="env" value="local" />
+	<api-gateway:autodiscovery apiId="${api_id}" ignoreBasePath="true" doc:name="API Autodiscovery" doc:id="5dc1c77c-7642-4a63-8b52-f43cde1abc9c" flowRef="fuank-customer-sapi-main" />
+</mule>

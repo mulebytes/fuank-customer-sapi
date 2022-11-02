@@ -1,0 +1,12 @@
+api_id: "18277498"
+
+cosmos: 
+    database_account_url: "https://cosmos-test-customers.documents.azure.com:443/"
+    rest_api_version: "2015-04-08"
+    token_key: "22MpqFlCAtHavMD44JtuZroBjdeQgm7m64Fo8TPFECznxwrdZ5g6ahLcEzOJsXaFm5FZGKPErk0OACDbieOKTw=="
+    database: "CustomersDB"
+    collection: "CustomersCollection"
+salesforce: 
+    secuirty_token: "xgMqjJAoufNWOrbAjDIreaK3"
+    username: "jreddycr@gmail.com"
+    password: "SJsforce@92"

@@ -1,0 +1,256 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:azure-cosmos-db-connector-mule-4="http://www.mulesoft.org/schema/mule/azure-cosmos-db-connector-mule-4"
+	xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns:salesforce="http://www.mulesoft.org/schema/mule/salesforce"
+	xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core"
+	xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd
+http://www.mulesoft.org/schema/mule/salesforce http://www.mulesoft.org/schema/mule/salesforce/current/mule-salesforce.xsd
+http://www.mulesoft.org/schema/mule/azure-cosmos-db-connector-mule-4 http://www.mulesoft.org/schema/mule/azure-cosmos-db-connector-mule-4/current/mule-azure-cosmos-db-connector-mule-4.xsd">
+	<flow name="getCustomer-implementation-flow" doc:id="56c9a112-3165-4ccc-b191-e15c170c69d0" >
+		<ee:transform doc:name="Set customerId" doc:id="bc9f26bf-c205-4e9a-b105-99f1fcd5ac2e" >
+			<ee:variables >
+				<ee:set-variable variableName="customerId" ><![CDATA[attributes.uriParams.'customerId']]></ee:set-variable>
+			</ee:variables>
+		</ee:transform>
+		<ee:transform doc:name="Set selectQuery" doc:id="35c6c551-d6a0-48fa-91c5-9ac51a8aef66" >
+			<ee:message >
+			</ee:message>
+			<ee:variables >
+				<ee:set-variable variableName="selectQuery" ><![CDATA[%dw 2.0
+output application/java
+---
+"SELECT Id, customerId__c, firstName__c, lastName__c, companyName__c, email__c, phone__c FROM Customer Where customerId__c = '$(vars.customerId)'"]]></ee:set-variable>
+			</ee:variables>
+		</ee:transform>
+		<set-variable value='#["Select Query is $(vars.selectQuery)"]' doc:name="Set logMessage" doc:id="686562cb-8707-42f0-801f-e398fa8f9159" variableName="logMessage"/>
+		<flow-ref doc:name="infoLogger" doc:id="7b94fa91-8c2f-45d3-b0b7-2724cbbf1fed" name="infoLogger"/>
+		<salesforce:query doc:name="Query Customer Record" doc:id="54488982-e9c0-45e6-8300-ba73fa587066" config-ref="Salesforce_Config">
+			<salesforce:salesforce-query ><![CDATA[#[vars.selectQuery]]]></salesforce:salesforce-query>
+			<salesforce:parameters ><![CDATA[#[{
+	customerId: vars.customerId
+}]]]></salesforce:parameters>
+		</salesforce:query>
+		<ee:transform doc:name="Set Response" doc:id="379e95e8-1b87-4c76-8882-e53b14aca3ef" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+payload]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+		<error-handler ref="globalErrorHandler" />
+	
+	</flow>
+	<flow name="createCustomer-implementation-flow" doc:id="6888b389-a7bd-48d3-9c9a-8d882f9826c8">
+		<set-variable value='Request Received' doc:name="Set logMessage" doc:id="82860fc8-f3f0-4fdd-99f9-5ca1265e2f4b" variableName="logMessage"/>
+		<flow-ref doc:name="infoLogger" doc:id="30b4db16-d87c-4bff-a9b6-d2aebfdd1668" name="infoLogger"/>
+		<ee:transform doc:name="Request Transformation" doc:id="e0391f32-f763-45f7-aae8-32f2e8ea9b42" >
+			<ee:message >
+			</ee:message>
+			<ee:variables >
+				<ee:set-variable variableName="requestPayload" ><![CDATA[%dw 2.0
+output application/json
+---
+{
+	id: uuid(),
+	(payload)
+}]]></ee:set-variable>
+			</ee:variables>
+		</ee:transform>
+		<try doc:name="Try" doc:id="4d37be41-c846-4309-994e-89eb1e3cbab2">
+			
+					<ee:transform doc:name="Set Request" doc:id="cebb15a7-9352-4d1c-ab8d-9920efdaacd8">
+			<ee:message>
+							<ee:set-payload resource="dataweave_mappings/createCustomerSalesforce.dwl" />
+			</ee:message>
+		</ee:transform>
+					<salesforce:create type="Customer" doc:name="Create Customer" doc:id="3ee796ee-5b7f-4eea-8e59-ed34480d5921" config-ref="Salesforce_Config" />
+			<ee:transform doc:name="Prase Salesforce Response as JSON" doc:id="7e9a6348-a426-4179-a9f1-e77b54011ade">
+			<ee:message>
+				<ee:set-payload><![CDATA[%dw 2.0
+output application/json deferred=true
+---
+payload]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+			<ee:transform doc:name="Set Response">
+            <ee:message>
+            </ee:message>
+				<ee:variables >
+					<ee:set-variable variableName="salesforceResponse" ><![CDATA[%dw 2.0
+output application/json
+---
+{
+  status: if(payload.successful default true) "Customer profile Created successfully" else  "Customer profile Creation Failed, Please find below response from Salesforce",
+  salesforceResponse: payload..payload 
+}]]></ee:set-variable>
+				</ee:variables>
+        
+</ee:transform>
+        <set-variable value="Response From Salesforce Create" doc:name="Set logMessage" doc:id="14165947-9328-4f1f-979e-8a1f42e09a98" variableName="logMessage" />
+		<flow-ref doc:name="infoLogger" doc:id="f3bfb4c1-2451-4e34-bec5-dad14d395e24" name="infoLogger" />
+			<ee:transform doc:name="Set Cosmos Request" doc:id="b772c72f-5062-4dff-b02d-c467177923f8">
+						<ee:message>
+							<ee:set-payload resource="dataweave_mappings/createCustomerCosmos.dwl" />
+						</ee:message>
+					</ee:transform>
+			<azure-cosmos-db-connector-mule-4:create-document config-ref="Azure_Cosmos_Db_Key_Token_Config" dbIdUriParam="${cosmos.database}" collIdUriParam="${cosmos.collection}" xMsDocumentdbPartitionkeyHeader="#[write([payload.customerId], 'application/json')]" xMsIndexingDirectiveHeader="INCLUDE">
+						<azure-cosmos-db-connector-mule-4:create-document-body><![CDATA[#[%dw 2.0
+output application/json
+---
+{
+	(payload)
+}]]]></azure-cosmos-db-connector-mule-4:create-document-body>
+
+        </azure-cosmos-db-connector-mule-4:create-document>
+			<ee:transform doc:name="Set cosmosResponse" doc:id="91ae83b9-7b3c-4fb7-8c93-45045f157491" >
+				<ee:message >
+				</ee:message>
+				<ee:variables >
+					<ee:set-variable variableName="cosmosResponse" ><![CDATA[%dw 2.0
+output application/json
+---
+payload]]></ee:set-variable>
+				</ee:variables>
+			</ee:transform>
+			<set-variable value="Response From Cosmos DB" doc:name="Set logMessage" doc:id="b0b88281-78c8-4d18-904a-e6a4c2568fb9" variableName="logMessage" />
+			<flow-ref doc:name="infoLogger" doc:id="46ee7777-a30c-4123-8e7f-fc557372c03a" name="infoLogger" />
+			<error-handler >
+				<on-error-propagate enableNotifications="true" logException="true" doc:name="On Error Propagate" doc:id="1153897d-f22f-454b-8493-dae924e0e77d" >
+					<logger level="INFO" doc:name="Logger" doc:id="890d2cd9-7193-4a05-9c9b-e0f8c09bac52" message="Error Occured In Try Scope"/>
+				</on-error-propagate>
+			</error-handler>
+		</try>
+		<ee:transform doc:name="Set Response" doc:id="449f30e0-a935-419b-9fc2-69bdea8535e2" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+{
+	SalesforceResponse: vars.salesforceResponse,
+	CosmosResponse: vars.cosmosResponse
+}]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+		
+	
+</flow>
+	<flow name="updateCustomer-implementation-flow" doc:id="ad16c09a-2bed-47ec-b219-76c3aff0a7b5" >
+		<set-variable value='Request Received' doc:name="Set logMessage" doc:id="be0d17b3-d444-4ab3-a7a0-02ceefc742f0" variableName="logMessage"/>
+		<flow-ref doc:name="infoLogger" doc:id="facba69b-a1f1-40d7-b39c-f22e3ff2151f" name="infoLogger"/>
+		<ee:transform doc:name="Request Transformation" doc:id="c5f1c830-30e8-4af4-a0ab-f3a41a5a08ee" >
+			<ee:message >
+			</ee:message>
+			<ee:variables >
+				<ee:set-variable variableName="requestPayload" ><![CDATA[%dw 2.0
+output application/json
+---
+{
+	id: payload.customerId,
+	(payload)
+}]]></ee:set-variable>
+			</ee:variables>
+		
+</ee:transform>
+		<try doc:name="Try" doc:id="f2ba515a-54d9-4e62-90ac-50aafedd292d">
+				<ee:transform doc:name="Search Parameter" doc:id="c9fa8828-740c-4cd4-97ea-6560bdb65808">
+						<ee:message>
+							<ee:set-attributes><![CDATA[%dw 2.0
+output application/java
+---
+uriParams: {
+	customerId: vars.requestPayload.id
+}]]></ee:set-attributes>
+						</ee:message>
+					</ee:transform>
+					<flow-ref doc:name="getCustomer-implementation-flow" doc:id="c3e44ac5-6eb3-4a0a-9827-ea91601a5062" name="getCustomer-implementation-flow" target="customerId" targetValue="#[payload[0].Id]" />
+			<ee:transform doc:name="Set Request" doc:id="3b4dbaf0-f4fb-49d7-af0e-e64cbf1d43b8">
+			<ee:message>
+							<ee:set-payload resource="dataweave_mappings/updateCustomerSalesforce.dwl" />
+			
+</ee:message>
+		</ee:transform>
+			<salesforce:update type="Customer" doc:name="Update Customer Record" doc:id="b890e5c6-697f-46df-a8f4-76366bb66d60" config-ref="Salesforce_Config" />
+					<ee:transform doc:name="Prase Salesforce Response as JSON" doc:id="85fd682f-db6c-47e9-a2fb-7ab2a6ad6134">
+			<ee:message>
+				<ee:set-payload><![CDATA[%dw 2.0
+output application/json deferred=true
+---
+payload]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+			<ee:transform doc:name="Set Response">
+            <ee:message>
+            </ee:message>
+				<ee:variables>
+					<ee:set-variable variableName="salesforceResponse"><![CDATA[%dw 2.0
+output application/json
+---
+{
+  status: if(payload.successful default true) "Customer profile Updated successfully" else  "Customer profile Update Failed, Please find below response from Salesforce",
+  salesforceResponse: payload..payload 
+}]]></ee:set-variable>
+				</ee:variables>
+        
+</ee:transform>
+			<set-variable value="Response From Salesforce Update" doc:name="Set logMessage" doc:id="6be9cf66-d6c8-4aaf-b2bb-17d66dae1a41" variableName="logMessage" />
+					<flow-ref doc:name="infoLogger" doc:id="d04d1351-9bba-4b69-9587-a28d28af5495" name="infoLogger" />
+			<ee:transform doc:name="Set Cosmos Request" doc:id="fc272f2b-e4f6-40ea-b22c-167b9caf6ca5">
+						<ee:message>
+							<ee:set-payload resource="dataweave_mappings/updateCustomerCosmos.dwl" />
+						</ee:message>
+					</ee:transform>
+			<azure-cosmos-db-connector-mule-4:create-document config-ref="Azure_Cosmos_Db_Key_Token_Config" dbIdUriParam="${cosmos.database}" collIdUriParam="${cosmos.collection}" xMsDocumentdbPartitionkeyHeader="#[write([payload.customerId], 'application/json')]" xMsIndexingDirectiveHeader="INCLUDE" doc:name="Upsert Document" xMsDocumentdbIsUpsertHeader="true">
+						<azure-cosmos-db-connector-mule-4:create-document-body><![CDATA[#[%dw 2.0
+output application/json
+---
+{
+	(payload)
+}]]]></azure-cosmos-db-connector-mule-4:create-document-body>
+
+        </azure-cosmos-db-connector-mule-4:create-document>
+			<ee:transform doc:name="Set cosmosResponse" doc:id="3d14562f-3c76-428d-b777-3ac0c9f8a363" >
+				<ee:message >
+				</ee:message>
+				<ee:variables >
+					<ee:set-variable variableName="cosmosResponse" ><![CDATA[%dw 2.0
+output application/json
+---
+payload]]></ee:set-variable>
+				</ee:variables>
+			</ee:transform>
+			<set-variable value="Response From Cosmos DB" doc:name="Set logMessage" doc:id="2c22abaa-b844-4e56-8048-102b84c91f81" variableName="logMessage" />
+			<flow-ref doc:name="infoLogger" doc:id="d76cee01-9766-4c0b-a791-25b6faeef826" name="infoLogger" />
+		<error-handler >
+				<on-error-propagate enableNotifications="true" logException="true" doc:name="On Error Propagate" doc:id="0183898d-1e9d-47c7-9e66-456fe0b0151b" >
+					<logger level="INFO" doc:name="Logger" doc:id="2a0dd2a3-c71b-4217-94c8-5974035d3a1d" message="Error Occured In Try Scope"/>
+				</on-error-propagate>
+			</error-handler>
+</try>
+		<ee:transform doc:name="Set Response" doc:id="851a7417-9eb2-4077-9afd-793c5fc6bfde" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+{
+	SalesforceResponse: vars.salesforceResponse,
+	CosmosResponse: vars.cosmosResponse
+}]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+	
+	</flow>
+	<flow name="listCustomers-implementation-flow" doc:id="a350772c-47d0-4b81-a122-e917ad8f3d48" >
+		<azure-cosmos-db-connector-mule-4:list-documents doc:name="List Documents" doc:id="deec587c-0b55-4826-b741-07cf1fc96b34" config-ref="Azure_Cosmos_Db_Key_Token_Config" dbIdUriParam="${cosmos.database}" collIdUriParam="${cosmos.collection}" xMsConsistencyLevelHeader="SESSION"/>
+		<ee:transform doc:name="Set Response" doc:id="9d023838-b8b6-4e8a-a66b-f51eca2cc753" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+payload]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+	</flow>
+</mule>
