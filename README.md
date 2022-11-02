@@ -18,7 +18,7 @@ This Project is Structued in following ways.
     - /properties (API configuration parameters)
 
 ## How to Run ?
-
+**Authentication is already added in postman collection**
 - This API is already deployed in CloudHub (http://faunk-customer-sapi.us-e2.cloudhub.io/api/*)
 - Or You can Import the API and deploy locally (http://localhost:8081/api/*)
 - import the postman collection (faunk-customer-api.postman_collection.json) and execute the requests
